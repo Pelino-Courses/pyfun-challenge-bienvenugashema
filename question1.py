@@ -1,14 +1,14 @@
 from datetime import datetime
 
 
-def time_function(start, end):
+def time_function(start, end, format="%Y-%m-%d"):
 
     """
     You will enter time in this form year-month-day
     """
 
-    st = datetime.strptime(start, "%Y-%m-%d")
-    en = datetime.strptime(end, "%Y-%m-%d")
+    st = datetime.strptime(start, format).date()
+    en = datetime.strptime(end, format).date()
     difference = (en - st).days
     return difference
 
