@@ -6,11 +6,13 @@ def time_function(start, end, format="%Y-%m-%d"):
     """
     You will enter time in this form year-month-day
     """
-
-    st = datetime.strptime(start, format).date()
-    en = datetime.strptime(end, format).date()
-    difference = (en - st).days
-    return difference
+    try:
+        st = datetime.strptime(start, format).date()
+        en = datetime.strptime(end, format).date()
+        difference = (en - st).days
+        return difference
+    except ValueError as e:
+        print(f"Error for {start} or {end} : {e} or invalid date format" )
 
  
 print(time_function.__doc__)
