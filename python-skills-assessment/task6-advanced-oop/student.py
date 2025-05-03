@@ -8,14 +8,12 @@ class Student(Person):
     students_list = {}
     def register_students(self) -> list:
         # student_names = input("Enter names sepataed by comma: ")
-        self.student_courses = input("Courses you attend sepatared by comma: ").split(',')
         # self.students = student_names.split(',') 
         self.grade = input("Grades you have: ")
         # register student
         student_id = len(Student.students_list) + 1
         student: dict['str', 'str'] =  {
             "name": self.name,
-            "courses": [course for course in self.student_courses],
             "grade": self.grade
         }   
         Student.students_list[student_id] = student

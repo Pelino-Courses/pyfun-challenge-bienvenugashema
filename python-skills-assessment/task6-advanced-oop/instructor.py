@@ -2,7 +2,8 @@ from person import Person
 from student import Student
 
 class Instructor(Person):
-    def __init__(self, name):
+    def __init__(self, name, course):
+        self.course = course
         super().__init__(name)
         
     def view_student(self):
@@ -14,6 +15,4 @@ class Instructor(Person):
             )
         return "\n".join(students_info)
     def display_instructor_info(self):
-        course_to_teach = input("Enter course you teach: ")
-        self.course = course_to_teach
         return f"The name of instractor is: {self.name} and Teaches {self.course}"

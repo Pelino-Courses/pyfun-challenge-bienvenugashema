@@ -18,4 +18,4 @@ class TeachingAssistant(Student, Instructor):
         return f"Teaching assistant: {self.name} is teaching the course {course} with grade {grade}"
     
     def display_info(self):
-        return f"Teaching assistant name: {self.name} is teaching {self.course} with grade: {self.grade}"
+        return f"Teaching assistant name: {self.name} is teaching {self.course} with grade: {self.grades}"
