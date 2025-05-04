@@ -2,7 +2,7 @@ from person import Person
 from student import Student
 
 class Instructor(Person):
-    def __init__(self, name, course):
+    def __init__(self, name, course=None):
         self.course = course
         super().__init__(name)
         

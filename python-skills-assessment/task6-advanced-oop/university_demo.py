@@ -35,16 +35,22 @@ def university_demo():
             
             if choice == "1":
                 instructor_name = input("Enter the instructor's name: ")
-                course_to_teach = input("Enter course to teach:")
-                instructor = Instructor(instructor_name)
+                course_name = input("Enter course to teach: ")
+                
+                # Create course first if it doesn't exist
+                if course_name not in courses:
+                    course = Course(course_name)  # Create course with name parameter
+                    courses[course_name] = course
+                    print(f"Created new course: {course_name}")
+                
+                # Create instructor and link to course
+                instructor = Instructor(instructor_name, course_name)
                 instructors[instructor_name] = instructor
-                instructor.display_instructor_info()
-                courses[instructor.course] = course 
                 print(instructor.display_instructor_info())
 
             elif choice == "2":
                 course_name = input("Enter the course name: ")
-                course = Course()
+                course = Course(course_name)
                 courses[course_name] = course
                 print(f"Course '{course_name}' has been created.")
 
@@ -62,27 +68,39 @@ def university_demo():
             elif choice == "4":
                 student_name = input("Enter student name to enroll: ")
                 course_name = input("Enter course name: ")
+                instructor_name = input("Enter instructor name: ")
                 if student_name not in students or course_name not in courses:
                     print("Error: Student or course not found!")
                     continue
-                print(enrollments.enroll_student(student_name, course_name))
+                print(enrollments.enroll_student(student_name, course_name, instructor_name))
 
             elif choice == "5":
                 ta_name = input("Enter the teaching assistant's name: ")
                 course_name = input("Enter the course to assist: ")
+                
+                # Validate course exists
                 if course_name not in courses:
                     print("Error: Course does not exist!")
                     continue
-                ta = TeachingAssistant(ta_name, course_name)
-                teaching_assistants[ta_name] = ta
                 
-                instructor_name = input("Enter instructor name to assist: ")
-                if instructor_name in instructors:
-                    print(ta.instructor_to_assist(instructor_name, course_name))
-                    print(ta.student_to_teach(course_name, 95))
-                    print(ta.display_info())
-                else:
-                    print("Error: Instructor not found!")
+                # Create TA with required course parameter
+                try:
+                    ta = TeachingAssistant(ta_name, course_name, 50)  # Pass course_name as required by Instructor parent
+                    teaching_assistants[ta_name] = ta
+                    
+                    # Get instructor information
+                    instructor_name = input("Enter instructor name to assist: ")
+                    if instructor_name in instructors:
+                        print(ta.instructor_to_assist(instructor_name, course_name))
+                        
+                        # Add teaching performance grade
+                        grade = float(input("Enter TA's teaching performance grade (0-100): "))
+                        print(ta.student_to_teach(course_name, grade))
+                        print(ta.display_info())
+                    else:
+                        print("Error: Instructor not found!")
+                except ValueError as e:
+                    print(f"Error: Invalid grade value - {e}")
 
             elif choice == "6":
                 print("\nCurrent Enrollments:")
